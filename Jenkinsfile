@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'COUNTRIES', defaultValue: 'israel,usa,germany', description: 'Comma-separated list of countries')
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
@@ -26,11 +30,17 @@ pipeline {
 
         stage('Test API Endpoints') {
             steps {
-                echo 'Testing endpoints...'
-                bat 'curl.exe http://localhost:5000/status'
-                bat 'curl.exe "http://localhost:5000/newCasesPeak?country=israel"'
-                bat 'curl.exe "http://localhost:5000/recoveredPeak?country=israel"'
-                bat 'curl.exe "http://localhost:5000/deathsPeak?country=israel"'
+                script {
+                    echo "Testing endpoints for countries: ${params.COUNTRIES}"
+                    def countries = params.COUNTRIES.split(',')
+
+                    for (country in countries) {
+                        echo "🔍 Querying country: ${country}"
+                        bat "curl.exe \"http://localhost:5000/newCasesPeak?country=${country.trim()}\""
+                        bat "curl.exe \"http://localhost:5000/recoveredPeak?country=${country.trim()}\""
+                        bat "curl.exe \"http://localhost:5000/deathsPeak?country=${country.trim()}\""
+                    }
+                }
             }
         }
 
