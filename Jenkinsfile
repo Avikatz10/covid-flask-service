@@ -5,7 +5,6 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 echo 'Cloning repository...'
-                // ב-Pipeline זה אוטומטי
             }
         }
 
@@ -20,7 +19,7 @@ pipeline {
             steps {
                 echo 'Running Flask container...'
                 bat 'docker run -d -p 5000:5000 --name covid-service covid-flask-app'
-                bat 'timeout 5'
+                sleep time: 5, unit: 'SECONDS'
             }
         }
 
