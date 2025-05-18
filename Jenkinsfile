@@ -18,6 +18,7 @@ pipeline {
         stage('Run Container') {
             steps {
                 echo 'Running Flask container...'
+                bat 'docker rm -f covid-service || exit 0'
                 bat 'docker run -d -p 5000:5000 --name covid-service covid-flask-app'
                 sleep time: 5, unit: 'SECONDS'
             }
