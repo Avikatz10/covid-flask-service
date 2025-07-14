@@ -1,12 +1,12 @@
 #covid-flask-service
 
-#COVID-19 Flask Service + Jenkins Automation
+#COVID-19 Flask Service + Jenkins Automation:
 
 This project implements a Python Flask service that provides COVID-19 statistics using an external public API.  
 The service is deployed using Docker and tested via a Jenkins pipeline.
 
 
-#Project Features
+#Project Features:
 
 *Fetches COVID-19 data for any country from an external API.
 *Provides 4 API endpoints:
